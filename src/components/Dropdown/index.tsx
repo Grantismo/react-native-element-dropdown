@@ -52,6 +52,7 @@ const DropdownComponent: <T>(
       selectedTextStyle,
       itemContainerStyle,
       itemTextStyle,
+      inputSearchContainerStyle,
       inputSearchStyle,
       iconStyle,
       selectedTextProps = {},
@@ -478,6 +479,7 @@ const DropdownComponent: <T>(
             <CInput
               testID={testID + ' input'}
               accessibilityLabel={accessibilityLabel + ' input'}
+              style={[styles.input, inputContainerStyle]}
               inputStyle={[inputSearchStyle, font()]}
               value={searchText}
               autoCorrect={false}
