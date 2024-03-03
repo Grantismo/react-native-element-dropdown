@@ -2,6 +2,7 @@ import type {
   StyleProp,
   TextStyle,
   ViewStyle,
+  ViewProps,
   TextProps,
   ImageStyle,
   FlatListProps,
@@ -22,6 +23,7 @@ export interface DropdownProps<T> {
   itemTestIDField?: string;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
+  renderContainer?: (args: ViewProps) => JSX.Element;
   placeholderStyle?: StyleProp<TextStyle>;
   selectedTextStyle?: StyleProp<TextStyle>;
   selectedTextProps?: TextProps;

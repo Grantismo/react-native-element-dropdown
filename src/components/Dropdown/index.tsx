@@ -23,6 +23,7 @@ import {
   TouchableWithoutFeedback,
   View,
   ViewStyle,
+  ViewProps,
   StatusBar,
 } from 'react-native';
 import { useDetectDevice } from '../../toolkits';
@@ -47,6 +48,7 @@ const DropdownComponent: <T>(
       onChange,
       style = {},
       containerStyle,
+      renderContainer,
       placeholderStyle,
       selectedTextStyle,
       itemContainerStyle,
@@ -476,7 +478,6 @@ const DropdownComponent: <T>(
             <CInput
               testID={testID + ' input'}
               accessibilityLabel={accessibilityLabel + ' input'}
-              style={[styles.input, inputSearchStyle]}
               inputStyle={[inputSearchStyle, font()]}
               value={searchText}
               autoCorrect={false}
@@ -590,6 +591,10 @@ const DropdownComponent: <T>(
             extendHeight = keyboardHeight;
           }
 
+          const ContainerView = renderContainer ?? (args: ViewProps) => {
+            return <View  {...props}></View>
+          }
+
           return (
             <Modal
               transparent
@@ -619,7 +624,7 @@ const DropdownComponent: <T>(
                       isFull && styles.fullScreen,
                     ])}
                   >
-                    <View
+                    <ContainerView
                       style={StyleSheet.flatten([
                         styles.container,
                         isFull ? styleHorizontal : styleVertical,
@@ -630,7 +635,7 @@ const DropdownComponent: <T>(
                       ])}
                     >
                       {_renderList(isTopPosition)}
-                    </View>
+                    </ContainerView>
                   </View>
                 </View>
               </TouchableWithoutFeedback>
