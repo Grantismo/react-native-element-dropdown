@@ -48,7 +48,6 @@ const DropdownComponent: <T>(
       onChange,
       style = {},
       containerStyle,
-      renderContainer,
       placeholderStyle,
       selectedTextStyle,
       itemContainerStyle,
@@ -76,6 +75,7 @@ const DropdownComponent: <T>(
       renderRightIcon,
       renderItem,
       renderInputSearch,
+      renderContainer,
       onFocus,
       onBlur,
       autoScroll = true,
@@ -591,9 +591,10 @@ const DropdownComponent: <T>(
             extendHeight = keyboardHeight;
           }
 
-          const ContainerView = renderContainer ?? (args: ViewProps) => {
-            return <View  {...props}></View>
+          const renderDefaultContainer = (args: ViewProps) => {
+            return <View  {...args}></View>
           }
+          const ContainerView = renderContainer ?? renderDefaultContainer;
 
           return (
             <Modal

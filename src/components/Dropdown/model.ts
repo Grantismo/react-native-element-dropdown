@@ -23,7 +23,6 @@ export interface DropdownProps<T> {
   itemTestIDField?: string;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
-  renderContainer?: (args: ViewProps) => JSX.Element;
   placeholderStyle?: StyleProp<TextStyle>;
   selectedTextStyle?: StyleProp<TextStyle>;
   selectedTextProps?: TextProps;
@@ -57,6 +56,7 @@ export interface DropdownProps<T> {
   inverted?: boolean;
   mode?: 'default' | 'modal' | 'auto';
   onChange: (item: T) => void;
+  renderContainer?: (args: ViewProps) => JSX.Element | null | undefined;
   renderLeftIcon?: (visible?: boolean) => JSX.Element | null | undefined;
   renderRightIcon?: (visible?: boolean) => JSX.Element | null | undefined;
   renderItem?: (item: T, selected?: boolean) => JSX.Element | null | undefined;
