@@ -5,27 +5,24 @@ import React, {
   useCallback,
   useEffect,
   useImperativeHandle,
-  useMemo,
   useRef,
   useState,
 } from 'react';
 import {
   Dimensions,
-  FlatList,
   I18nManager,
   Image,
   Keyboard,
   KeyboardEvent,
-  Modal,
   StyleSheet,
   Text,
   TouchableHighlight,
   TouchableWithoutFeedback,
   View,
-  ViewStyle,
   ViewProps,
   StatusBar,
 } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import { useDetectDevice } from '../../toolkits';
 import { useDeviceOrientation } from '../../useDeviceOrientation';
 import CInput from '../TextInput';
@@ -68,9 +65,7 @@ const DropdownComponent: <T>(
       placeholder = 'Select item',
       search = false,
       maxHeight = 340,
-      minHeight = 0,
       disable = false,
-      keyboardAvoiding = true,
       inverted = true,
       renderLeftIcon,
       renderRightIcon,
@@ -85,7 +80,6 @@ const DropdownComponent: <T>(
       dropdownPosition = 'auto',
       flatListProps,
       searchQuery,
-      backgroundColor,
       onChangeText,
       confirmSelectItem,
       onConfirmSelectItem,
@@ -104,18 +98,6 @@ const DropdownComponent: <T>(
     const [searchText, setSearchText] = useState('');
 
     const { width: W, height: H } = Dimensions.get('window');
-    const styleContainerVertical: ViewStyle = useMemo(() => {
-      return {
-        backgroundColor: 'rgba(0,0,0,0.1)',
-        alignItems: 'center',
-      };
-    }, []);
-    const styleHorizontal: ViewStyle = useMemo(() => {
-      return {
-        width: orientation === 'LANDSCAPE' ? W / 2 : '100%',
-        alignSelf: 'center',
-      };
-    }, [W, orientation]);
 
     useImperativeHandle(currentRef, () => {
       return { open: eventOpen, close: eventClose };
@@ -369,8 +351,8 @@ const DropdownComponent: <T>(
       const isSelected = currentValue && _.get(currentValue, valueField);
 
       const renderDefaultDropdown = (args: ViewProps) => {
-        return <View style={[styles.dropdown]} {...args}></View> 
-      }
+        return <View style={[styles.dropdown]} {...args} />;
+      };
       const DropdownView = renderDropdown ?? renderDefaultDropdown;
       return (
         <TouchableWithoutFeedback
@@ -402,11 +384,7 @@ const DropdownComponent: <T>(
                   styles.icon,
                   { tintColor: iconColor },
                   iconStyle,
-                  visible && {
-                    transform: [
-                      { scaleY: -1 }
-                    ]
-                  }
+                  visible && { transform: [{ scaleY: -1 }] },
                 ])}
               />
             )}
@@ -572,7 +550,7 @@ const DropdownComponent: <T>(
 
     const _renderModal = useCallback(() => {
       if (visible && position) {
-        const { isFull, width, height, top, bottom, left } = position;
+        const { width, height, top, bottom } = position;
 
         const onAutoPosition = () => {
           if (keyboardHeight > 0) {
@@ -583,42 +561,31 @@ const DropdownComponent: <T>(
         };
 
         if (width && top && bottom) {
-          const styleVertical: ViewStyle = {
-            left: left,
-            maxHeight: maxHeight,
-            minHeight: minHeight,
-          };
           const isTopPosition =
             dropdownPosition === 'auto'
               ? onAutoPosition()
               : dropdownPosition === 'top';
 
-          let keyboardStyle: ViewStyle = {};
-
-          let extendHeight = !isTopPosition ? top : bottom;
-          if (
-            keyboardAvoiding &&
-            keyboardHeight > 0 &&
-            isTopPosition &&
-            dropdownPosition === 'auto'
-          ) {
-            extendHeight = keyboardHeight;
-          }
-
           const renderDefaultContainer = (args: ViewProps) => {
-            return <View style={[styles.container, containerStyle]} {...args}></View> 
-          }
+            return (
+              <View style={[styles.container, containerStyle]} {...args} />
+            );
+          };
           const ContainerView = renderContainer ?? renderDefaultContainer;
           return (
-              <TouchableWithoutFeedback onPress={showOrClose} style={{zIndex: -1, elevation: -1}}>
-                <View
-                  style={{position: "absolute", left: 0, top: position.height, width, maxHeight}}
-                >
-                    <ContainerView>
-                      {_renderList(isTopPosition)}
-                    </ContainerView>
-                </View>
-              </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={showOrClose}>
+              <View
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: position.height,
+                  width,
+                  maxHeight,
+                }}
+              >
+                <ContainerView>{_renderList(isTopPosition)}</ContainerView>
+              </View>
+            </TouchableWithoutFeedback>
           );
         }
         return null;
@@ -630,15 +597,11 @@ const DropdownComponent: <T>(
       position,
       keyboardHeight,
       maxHeight,
-      minHeight,
       dropdownPosition,
-      keyboardAvoiding,
       showOrClose,
-      styleContainerVertical,
-      backgroundColor,
       containerStyle,
-      styleHorizontal,
       _renderList,
+      renderContainer,
     ]);
     return (
       <View

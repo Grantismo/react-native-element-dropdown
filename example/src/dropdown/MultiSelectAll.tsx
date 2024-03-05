@@ -35,7 +35,7 @@ const MultiSelectComponent = () => {
         onPress={() => onSelectAll(!isSelectAll)}
       >
         <Text style={styles.txtSelectAll}>
-          {isSelectAll ? `UnSelect All` : 'Select All'}
+          {isSelectAll ? 'UnSelect All' : 'Select All'}
         </Text>
       </TouchableOpacity>
     );

@@ -63,12 +63,11 @@ export interface DropdownProps<T> {
   renderInputSearch?: (
     onSearch: (text: string) => void
   ) => JSX.Element | null | undefined;
-  renderContainer?: (args: ViewProps) => JSX.Element | null | undefined;
-  renderDropdown?: (args: ViewProps) => JSX.Element | null | undefined;
+  renderContainer?: (args: ViewProps) => JSX.Element;
+  renderDropdown?: (args: ViewProps) => JSX.Element;
   onFocus?: () => void;
   onBlur?: () => void;
   searchQuery?: (keyword: string, labelValue: string) => boolean;
   onChangeText?: (search: string) => void;
   onConfirmSelectItem?: (item: T) => void;
 }
-

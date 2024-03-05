@@ -30,6 +30,7 @@
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "fix": "eslint --fix \"**/*.{js,ts,tsx}\"",
     "prepack": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
@@ -60,7 +61,9 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "@expo/vector-icons": "^13.0.0",
+    "lodash": "^4.17.21",
+    "react-native-gesture-handler": "^2.15.0"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
