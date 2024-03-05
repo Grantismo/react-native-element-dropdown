@@ -77,6 +77,7 @@ const DropdownComponent: <T>(
       renderItem,
       renderInputSearch,
       renderContainer,
+      renderDropdown,
       onFocus,
       onBlur,
       autoScroll = true,
@@ -183,7 +184,7 @@ const DropdownComponent: <T>(
 
           setPosition({
             isFull,
-            width: Math.floor(width),
+            width: width,
             top: Math.floor(top + statusBarHeight),
             bottom: Math.floor(bottom - statusBarHeight),
             left: Math.floor(left),
@@ -366,6 +367,11 @@ const DropdownComponent: <T>(
 
     const _renderDropdown = () => {
       const isSelected = currentValue && _.get(currentValue, valueField);
+
+      const renderDefaultDropdown = (args: ViewProps) => {
+        return <View style={[styles.dropdown]} {...args}></View> 
+      }
+      const DropdownView = renderDropdown ?? renderDefaultDropdown;
       return (
         <TouchableWithoutFeedback
           testID={testID}
@@ -373,7 +379,7 @@ const DropdownComponent: <T>(
           accessibilityLabel={accessibilityLabel}
           onPress={showOrClose}
         >
-          <View style={styles.dropdown}>
+          <DropdownView>
             {renderLeftIcon?.(visible)}
             <Text
               style={[
@@ -396,10 +402,15 @@ const DropdownComponent: <T>(
                   styles.icon,
                   { tintColor: iconColor },
                   iconStyle,
+                  visible && {
+                    transform: [
+                      { scaleY: -1 }
+                    ]
+                  }
                 ])}
               />
             )}
-          </View>
+          </DropdownView>
         </TouchableWithoutFeedback>
       );
     };
@@ -595,55 +606,19 @@ const DropdownComponent: <T>(
           }
 
           const renderDefaultContainer = (args: ViewProps) => {
-            return <View  {...args}></View>
+            return <View style={[styles.container, containerStyle]} {...args}></View> 
           }
           const ContainerView = renderContainer ?? renderDefaultContainer;
-
           return (
-            <Modal
-              transparent
-              statusBarTranslucent
-              visible={visible}
-              supportedOrientations={['landscape', 'portrait']}
-              onRequestClose={showOrClose}
-            >
-              <TouchableWithoutFeedback onPress={showOrClose}>
+              <TouchableWithoutFeedback onPress={showOrClose} style={{zIndex: -1, elevation: -1}}>
                 <View
-                  style={StyleSheet.flatten([
-                    styles.flex1,
-                    isFull && styleContainerVertical,
-                    backgroundColor && { backgroundColor: backgroundColor },
-                    keyboardStyle,
-                  ])}
+                  style={{position: "absolute", left: 0, top: position.height, width, maxHeight}}
                 >
-                  <View
-                    style={StyleSheet.flatten([
-                      styles.flex1,
-                      !isTopPosition
-                        ? { paddingTop: extendHeight }
-                        : {
-                            justifyContent: 'flex-end',
-                            paddingBottom: extendHeight,
-                          },
-                      isFull && styles.fullScreen,
-                    ])}
-                  >
-                    <ContainerView
-                      style={StyleSheet.flatten([
-                        styles.container,
-                        isFull ? styleHorizontal : styleVertical,
-                        {
-                          width,
-                        },
-                        containerStyle,
-                      ])}
-                    >
+                    <ContainerView>
                       {_renderList(isTopPosition)}
                     </ContainerView>
-                  </View>
                 </View>
               </TouchableWithoutFeedback>
-            </Modal>
           );
         }
         return null;
@@ -665,7 +640,6 @@ const DropdownComponent: <T>(
       styleHorizontal,
       _renderList,
     ]);
-
     return (
       <View
         style={StyleSheet.flatten([styles.mainWrap, style])}
