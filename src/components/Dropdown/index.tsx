@@ -574,15 +574,7 @@ const DropdownComponent: <T>(
           const ContainerView = renderContainer ?? renderDefaultContainer;
           return (
             <TouchableWithoutFeedback onPress={showOrClose}>
-              <View
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  top: position.height,
-                  width,
-                  maxHeight,
-                }}
-              >
+              <View style={{ maxHeight }}>
                 <ContainerView>{_renderList(isTopPosition)}</ContainerView>
               </View>
             </TouchableWithoutFeedback>
