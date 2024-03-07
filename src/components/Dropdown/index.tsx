@@ -5,7 +5,8 @@ import React, {
   useImperativeHandle,
   useRef,
   useState,
-  ForwardedRef,
+  ReactElement,
+  JSXElementConstructor,
 } from 'react';
 import {
   Dimensions,
@@ -25,7 +26,7 @@ import {
 import { useDetectDevice } from '../../toolkits';
 import { useDeviceOrientation } from '../../useDeviceOrientation';
 import CInput from '../TextInput';
-import { DropdownProps, IDropdownRef } from './model';
+import { DropdownProps } from './model';
 import { styles } from './styles';
 
 const { isTablet } = useDetectDevice;
@@ -33,7 +34,9 @@ const ic_down = require('../../assets/down.png');
 
 const statusBarHeight: number = StatusBar.currentHeight || 0;
 
-const DropdownComponent = React.forwardRef(<T,>(props: DropdownProps<T>, currentRef: ForwardedRef<IDropdownRef>) => {
+const DropdownComponent: <T>(
+  props: DropdownProps<T>
+) => ReactElement<any, string | JSXElementConstructor<any>> | null = React.forwardRef((props, currentRef) => {
     const orientation = useDeviceOrientation();
     const {
       testID,
