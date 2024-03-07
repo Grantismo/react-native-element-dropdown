@@ -7,6 +7,7 @@ import React, {
   useState,
   ReactElement,
   JSXElementConstructor,
+  ReactNode,
 } from 'react';
 import {
   Dimensions,
@@ -36,7 +37,7 @@ const statusBarHeight: number = StatusBar.currentHeight || 0;
 
 const DropdownComponent: <T>(
   props: DropdownProps<T>
-) => ReactElement<any, string | JSXElementConstructor<any>> | null = React.forwardRef((props, currentRef) => {
+) => ReactNode | ReactElement<any, string | JSXElementConstructor<any>> | null | undefined = React.forwardRef((props, currentRef) => {
     const orientation = useDeviceOrientation();
     const {
       testID,
