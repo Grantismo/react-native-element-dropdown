@@ -1,0 +1,5 @@
+import React from 'react';
+import { DropdownProps, IDropdownRef } from './model';
+declare const DropdownComponent: React.ForwardRefExoticComponent<Pick<DropdownProps<unknown>, "fontFamily" | "testID" | "maxHeight" | "minHeight" | "backgroundColor" | "style" | "iconStyle" | "renderRightIcon" | "renderLeftIcon" | "onBlur" | "onChange" | "onChangeText" | "onFocus" | "placeholder" | "value" | "accessibilityLabel" | "search" | "renderItem" | "data" | "inverted" | "showsVerticalScrollIndicator" | "itemTestIDField" | "containerStyle" | "placeholderStyle" | "selectedTextStyle" | "selectedTextProps" | "itemContainerStyle" | "itemTextStyle" | "inputSearchContainerStyle" | "inputSearchStyle" | "iconColor" | "activeColor" | "labelField" | "valueField" | "searchField" | "searchPlaceholder" | "disable" | "autoScroll" | "dropdownPosition" | "flatListProps" | "keyboardAvoiding" | "confirmSelectItem" | "itemAccessibilityLabelField" | "mode" | "renderInputSearch" | "renderContainer" | "renderDropdown" | "searchQuery" | "onConfirmSelectItem"> & React.RefAttributes<IDropdownRef>>;
+export default DropdownComponent;
+//# sourceMappingURL=index.d.ts.map
